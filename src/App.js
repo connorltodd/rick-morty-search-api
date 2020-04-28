@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import SearchBar from './components/SearchBar';
 import CharacterCard from './components/CharacterCard';
+import AddCharacterForm from './components/AddCharacterForm';
 
 
 
@@ -37,7 +38,28 @@ class App extends React.Component {
     this.setState({ characters })
   }
 
+  addCharacter = (newCharacter) => {
+    let characters = this.state.characters;
+    characters.push(newCharacter)
+
+    this.setState({ characters: characters })
+  }
+
+  editCharacter = (event, updatedCharacter) => {
+    event.preventDefault();
+    const characters = this.state.characters.map(character => {
+      if (character.id === updatedCharacter.id) {
+        return updatedCharacter
+      } else {
+        return character
+      }
+    })
+
+    this.setState({ characters: characters })
+  }
+
   render() {
+    console.log(this.state.characters)
     return (
       <div className="App">
         <SearchBar
@@ -49,9 +71,11 @@ class App extends React.Component {
           <CharacterCard
             {...character}
             deleteCharacter={this.deleteCharacter}
+            editCharacter={this.editCharacter}
             key={character.id}
           />
         ))}
+        <AddCharacterForm addCharacter={this.addCharacter} />
       </div>
     );
   }
