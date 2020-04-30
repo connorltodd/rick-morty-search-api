@@ -1,9 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 
-import SearchBar from './components/SearchBar';
+import SearchBar from './components/SearchBar/SearchBar';
 import CharacterCard from './components/CharacterCard';
 import AddCharacterForm from './components/AddCharacterForm';
+import Header from './components/Header/Header';
 
 
 
@@ -45,8 +46,7 @@ class App extends React.Component {
     this.setState({ characters: characters })
   }
 
-  editCharacter = (event, updatedCharacter) => {
-    event.preventDefault();
+  editCharacter = (updatedCharacter) => {
     const characters = this.state.characters.map(character => {
       if (character.id === updatedCharacter.id) {
         return updatedCharacter
@@ -59,23 +59,27 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state.characters)
     return (
-      <div className="App">
+      <div className="container mt-4">
+        <Header />
         <SearchBar
           input={this.state.searchInputValue}
           inputChangeHandler={this.handleChange}
           inputSubmitHandler={this.handleSubmit}
         />
-        {this.state.characters.map(character => (
-          <CharacterCard
-            {...character}
-            deleteCharacter={this.deleteCharacter}
-            editCharacter={this.editCharacter}
-            key={character.id}
-          />
-        ))}
-        <AddCharacterForm addCharacter={this.addCharacter} />
+        <div className="row">
+          <div className="card col-12 col-sm-6 col-md-3 mx-auto" style={{ maxWidth: '250px', margin: '20px' }}>
+            <AddCharacterForm addCharacter={this.addCharacter} />
+          </div>
+          {this.state.characters.map((character) => (
+            <CharacterCard
+              {...character}
+              deleteCharacter={this.deleteCharacter}
+              editCharacter={this.editCharacter}
+              key={character.id}
+            />
+          ))}
+        </div>
       </div>
     );
   }

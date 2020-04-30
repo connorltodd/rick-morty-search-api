@@ -1,0 +1,10 @@
+body {
+    background: #F7F7F7;
+    font-family: 'Raleway', sans-serif;
+}
+
+input {
+    width: 200px;
+    height: 36px;
+    text-align: center;
+}
